@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Websockets</string>
+    <string name="title">(Android WebSockets Remote App)</string>
+    <string name="author_name">Iwo Paprota</string>
+    <string name="enter_name">Name</string>
+    <string name="enter_password">Password</string>
+    <string name="btn_join">JOIN</string>
+</resources>

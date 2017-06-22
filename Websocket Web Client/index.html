@@ -1,0 +1,211 @@
+<!DOCTYPE HTML>
+<html lang="pl">
+<script>
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') c = c.substring(1);
+            if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+        }
+        return "";
+    }
+    if (!getCookie("login"))
+        window.location.href = "http://localhost:9000/web/login.html";
+</script>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>WebTeckos</title>
+
+    <meta name="description" content="An application supporting communication between devices equipped with Android and workstations with Linux and Microsoft Windows" />
+    <meta name="keywords " content="communication, remote, phone, tablet, android, pc, wireless" />
+
+    <link rel="stylesheet" href="css/style.css" type="text/css" />
+    <link rel="stylesheet" href="fontello/fontello.css" type="text/css" />
+    <link rel="stylesheet" href="dist/themes/default/style.min.css" />
+    <link href='http://fonts.googleapis.com/css?family=Lato|Josefin+Sans&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <script src="/web/js/ipAddress.js"></script>
+    <script src="/web/js/FileSaver.js"></script>
+    <script src="/web/js/controller.js"></script>
+    <script src="/web/js/websocket.js"></script>
+    <script src="dist/jstree.min.js"></script>
+</head>
+
+<body>
+    <div class="ct " id="t1">
+        <div class="ct " id="t2">
+            <div class="ct " id="t3">
+                <div class="ct " id="t4">
+                    <div class="ct " id="t5">
+                        <div class="ct " id="t6">
+                            <div class="ct " id="t7">
+
+                                <section>
+                                    <ul id="navigators" onclick="clearPhonebook();">
+                                        <a href="#t1" onclick="sendRequestForBattery();">
+                                            <li class="icon-home" id="home">
+                                            </li>
+                                        </a>
+                                        <a href="#t2" onclick="sendRequestForPhonebook();">
+                                            <li class="icon-users-1" id="contacts"></li>
+                                        </a>
+                                        <a href="#t3" onclick='sendRequestForSms();'>
+                                            <li class="icon-chat" id="messages"></li>
+                                        </a>
+                                        <a href="#t4">
+                                            <li class="icon-folder-open" id="files" onclick="endLoader();sendRequestForDirectories();"></li>
+                                        </a>
+                                        <a href="#t5">
+                                            <li class="icon-basket" id="apps" onclick="endLoader();"></li>
+                                        </a>
+                                        <a href="#t6">
+                                            <li class="icon-mobile" id="device" onclick="endLoader();"></li>
+                                        </a>
+                                        <a href="#t7">
+                                            <li class="icon-key-inv" id="account" onclick="endLoader();"></li>
+                                        </a>
+                                    </ul>
+                                    <div class="page" id="p1">
+                                        <div id="battery">
+                                            <p id="batteryStatus"></p>
+                                        </div>
+                                        <li class="icon fa-home"><span class="title" id="welcome">Hello Iwo</span><span class="hint">This is my engineer thesis...<br/> If you like it, let me know, I'll be really happy If you do so.</span></li>
+
+
+
+                                    </div>
+                                    <div class="page" id="p2">
+                                        <li class="icon icon-users-1"><span class="title">Phonebook</span></li>
+                                        <div id="loaderPhonebook" class="loader"></div>
+                                        <ul class="phonebook wrapper" id="phonebookHeader">
+                                        </ul>
+                                        <div class="wrapper" id="contact-list">
+                                            <ul class="phonebook" id="phone-names" style="float: left;">
+                                            </ul>
+                                            <ul class="phonebook" id="phone-numbers" style="float: left;">
+                                            </ul>
+                                        </div>
+                                        <div style="clear: both;"></div>
+                                    </div>
+
+
+
+                                    <div class="page" id="p3">
+                                        <li class="icon icon-chat"><span class="title">Messages</span></li>
+                                        <div id="loaderMessages" class="loader"></div>
+
+                                        <div class="wrapper" id="messages-container">
+                                            <div id="messages-container-items">
+                                                <ul class="messages">
+                                                    <li class="icon-mail" id="newSms" onclick="createNewMessage();">New</li>
+                                                </ul>
+                                                <ul class="messages" id="messages-list" style="float: left;">
+                                                </ul>
+                                            </div>
+                                            <div id="message-content">
+
+                                                <ul id="messages-items">
+                                                </ul>
+
+                                                <form id="form_send_message">
+                                                    <input type="text" id="input_message" placeholder="Type your message here..." />
+                                                    <input type="submit" class="btn" id="btn_send" value="Send" onclick="sendSms(event)" />
+                                                    <div style="clear: both;"></div>
+                                                </form>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="page" id="p4">
+
+                                        <li class="icon icon-folder-open"><span class="title">Files</span></li>
+                                        <div id="loaderFiles" class="loader"></div>
+
+                                        <div id="jstree" class="content wrapper" style="margin-bottom:0">
+                                        </div>
+                                        <div class="content wrapper" id="filesButtons">
+                                            <button class="btn" id="download">Download</button>
+                                            <button class="btn" id="deleteFileBtn">Delete</button>
+                                        </div>
+
+                                        <div class="content wrapper" id="sendFileWrapper">
+                                            <hr style="margin:0">
+
+                                            <div style="margin-top:10px">Choose file to send:</div>
+                                            <input type="file" class="chooser" id="sendFileChooser" accept="*" />
+                                            <input type="submit" class="btn" id="btn_sendFile" onclick="sendFile('sendFile','request');" value="Send" />
+                                        </div>
+                                    </div>
+                                    <div class="page" id="p5">
+                                        <li class="icon icon-basket"><span class="title">Applications</span></li>
+                                        <div class="content wrapper" id="applications">
+                                            <div class="headers">Choose an app to install or drag and drop below:</div>
+                                            <input type="file" id="applicationChooser" class="chooser" name="files" accept=".apk" />
+                                            <input type="submit" class="btn" id="btn_install" onclick="sendFile('application','request');" value="Install" />
+
+
+                                        </div>
+                                    </div>
+                                    <div class="page" id="p6">
+                                        <li class="icon icon-mobile"><span class="title">Device</span></li>
+                                        <div class="content wrapper" id="personalise">
+                                            <div class="headers">Choose wallpaper:</div>
+                                            <input type="file" class="chooser" id="wallpaperChooser" accept="image/*" />
+                                            <input type="submit" class="btn" id="btn_wallpaper" onclick="sendFile('wallpaper','request');" value="Set" />
+                                            <hr>
+                                            <div class="headers">Choose ringtone:</div>
+                                            <input type="file" class="chooser" id="ringtoneChooser" accept="audio/*" />
+                                            <input type="submit" class="btn" id="btn_ringtone" onclick="sendFile('ringtone','request');" value="Set" />
+                                        </div>
+                                    </div>
+                                    <div class="page" id="p7">
+                                        <li class="icon icon-mail"><span class="title">Account</span></li>
+                                        <div class="content wrapper" id="accountWrapper">
+                                            <div class="headers">Change your password:</div>
+                                            <p class="passwordChange" style="margin-right:7px">Old Password:</p>
+                                            <input type="password" id="oldPassword" class="chooser passwordChangeInput" />
+                                            <hr>
+                                            <p class="passwordChange">New Password:</p>
+                                            <input type="password" id="newPassword" class="chooser passwordChangeInput" />
+                                            <hr>
+                                            <p class="passwordChange" style="margin-right:46px;">Confirm:</p>
+                                            <input type="password" id="newPasswordConfirm" class="chooser passwordChangeInput" />
+                                            <input type="submit" class="btn" id="btn_changePassword" onclick="changePassword()" value="Set" style="margin-top:5px;" />
+
+
+                                        </div>
+                                    </div>
+                                    <div class="popup">
+                                        <div class="bg"></div>
+                                        <div class="popupContainer">
+                                            <input type="button" class="close" value="x" />
+                                            <div class="popupContent">
+                                                <p class="phonebookText">Name</p>
+                                                <input type="text" class="editContactInput" id="editContactInputName" placeholder="Type name..." />
+                                                <p class="phonebookText">Number</p>
+                                                <input type="text" class="editContactInput" id="editContactInputPhone" placeholder="Type number..." />
+                                                <input type="submit" class="btn" id="deleteContactBtn" value="Delete" onclick="deleteContact()" style="display:none" />
+                                                <input type="submit" class="btn" id="editContactBtn" value="Ok" onclick="editContactName()" style="display:none" />
+                                                <input type="submit" class="btn" id="createContactBtn" value="Ok" onclick="createContact()" style="display:none" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="credit"> Iwo Paprota </p>
+                                    <a href="http://localhost:9000/web/login.html" class="logout">Logout</a>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="C:\Users\mix\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-v4\18.0.0\support-v4-18.0.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="44ec51e9d395a47aab135e5e1b556c0007442156">
+        <dex dex="C:\Users\mix\Desktop\WebsocketAndroid\Engineer-thesis\Websockets\build\intermediates\pre-dexed\debug\support-v4-18.0.0-2e75ef4e19bbb6af3a2a2cbcee3e33902d17b988.jar" />
+    </item>
+    <item
+        jar="C:\Users\mix\Desktop\WebsocketAndroid\Engineer-thesis\Websockets\build\intermediates\exploded-aar\com.android.support\appcompat-v7\18.0.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="8f11f56e350eacabf2273f646d981356eea0ed77">
+        <dex dex="C:\Users\mix\Desktop\WebsocketAndroid\Engineer-thesis\Websockets\build\intermediates\pre-dexed\debug\classes-736d2557dd1421c5da6487da0e34800b5b42d188.jar" />
+    </item>
+    <item
+        jar="C:\Users\mix\Desktop\WebsocketAndroid\Engineer-thesis\Websockets\build\intermediates\exploded-aar\Engineer-thesis\androidwebsocketsmaster\unspecified\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="0f65588283b80a7351e6e3a57214f055f431c5cd">
+        <dex dex="C:\Users\mix\Desktop\WebsocketAndroid\Engineer-thesis\Websockets\build\intermediates\pre-dexed\debug\classes-ed5f5040bc95a9ffd95539602c49136dbddd7225.jar" />
+    </item>
+
+</items>
