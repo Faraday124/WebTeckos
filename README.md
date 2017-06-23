@@ -14,6 +14,13 @@ a prototype interface, use case diagram and database schema. After gathering
 all the necessary information the application was implemented and then required tests
 were performed.
 
+The project consists of: 
+* Java Server using Websockets,
+* Webpage written in HTML, Javascript, JQuery and CSS,
+* Authentication backend written in PHP using MySQL database,
+* Client application on Android using SQLite and websocket libraries.
+
+
 
 ![Alt text](screens/register.png)
 ![Alt text](screens/login.png)
